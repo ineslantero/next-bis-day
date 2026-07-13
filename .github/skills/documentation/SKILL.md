@@ -63,7 +63,7 @@ Contents:
   - **Contributor** or **Member** role required
   - **Power BI Desktop** and **Power BI Pro** license needed for report steps
   - **Data Agent** and **OrgApp** availability depends on tenant settings
-- **Save the report theme JSON** — step-by-step with Notepad:
+- **Save the report theme JSON** — **only needed by the Power BI builder** (Modules 1 and 5 reports). Step-by-step with Notepad:
   1. Provide the full theme JSON block
   2. Open Notepad → paste → **File → Save As…**
   3. **Save as type** dropdown → **All Files (*.*)** (critical — prevents `.txt` suffix)
