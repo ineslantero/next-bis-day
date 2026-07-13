@@ -1,0 +1,20 @@
+# Generated game output — each team creates their own
+setup-guide/
+PLAY-GUIDE.md
+ANSWER-KEY.md
+
+# Power BI files
+*.pbix
+*.pbit
+
+# Theme files
+*.json
+!package.json
+!tsconfig.json
+
+# VS Code workspace files
+*.code-workspace
+
+# OS files
+Thumbs.db
+.DS_Store
