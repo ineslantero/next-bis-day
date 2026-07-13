@@ -108,11 +108,11 @@ AI CHARACTER NAME: [NAME OF THE AI/GHOST/GUIDE — e.g., "ODIN", "Lady Ravencres
 AI CHARACTER PERSONALITY: [1-2 SENTENCES — How does the AI talk?
 Example: "Damaged space station AI. Clinical but glitchy. Inserts [STATIC] into responses. Cares about crew survival."]
 
-MODULE IDEAS (optional — or let Copilot generate them):
-1. [MODULE 1 — the data anomaly puzzle, e.g., "oxygen recyclers failing"]
-2. [MODULE 2 — the pattern gap puzzle, e.g., "debris radar with one safe window"]
-3. [MODULE 3 — the AI conversation puzzle, e.g., "decode intercepted signal fragments"]
-4. [MODULE 4 — the notebook discovery puzzle, e.g., "engine diagnostic terminal"]
+MODULE IDEAS: Generate 4 themed module ideas that fit the story. Each must follow the escape room framework:
+1. A data anomaly puzzle for a Power BI report
+2. A pattern gap puzzle for an RTI Dashboard
+3. An AI conversation puzzle for a Data Agent
+4. A notebook discovery puzzle with hidden diagnostic output
 
 Build the complete game following the escape room framework. Use these Fabric skills for each item:
 
