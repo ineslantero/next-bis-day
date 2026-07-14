@@ -55,6 +55,11 @@ repos/
 
 In **VS Code**:
 
+Repository URLs to paste:
+
+- `https://github.com/ineslantero/next-bis-day`
+- `https://github.com/microsoft/skills-for-fabric`
+
 1. Open the **Source Control** view (the branch icon in the left activity bar, or **View → Source Control** in the menu bar).
 2. Click **Clone Repository**.
 3. Paste this repository URL into the URL field at the top and press Enter.
