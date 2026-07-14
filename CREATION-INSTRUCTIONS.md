@@ -49,7 +49,7 @@ Pick a parent folder (e.g. `C:\Repos\` or `~/repos`). You will end up with this 
 
 ```
 repos/
-├── fabric-escape-room-v2/   ← this repo (the Lakehouse-first game blueprint)
+├── next-bis-day/            ← this repo (the Lakehouse-first game blueprint)
 └── skills-for-fabric/       ← Microsoft Fabric authoring skills
 ```
 
@@ -57,7 +57,7 @@ In **VS Code**:
 
 1. Open the **Source Control** view (the branch icon in the left activity bar, or **View → Source Control** in the menu bar).
 2. Click **Clone Repository**.
-3. Paste the v2 repository URL into the URL field at the top and press Enter.
+3. Paste this repository URL into the URL field at the top and press Enter.
 4. In the folder picker, choose your parent folder (e.g. `C:\Repos`) and click **Select as Repository Destination**.
 5. When the popup asks "Would you like to open the cloned repository?", click **Cancel** — you'll open both together in the next step.
 6. Repeat steps 1–4 for the Fabric skills:
@@ -72,7 +72,7 @@ In **VS Code**:
 
 So Copilot picks up the game blueprint **and** the Fabric skills at the same time:
 
-1. In VS Code, click **File → Open Folder…** in the top menu bar, then select your `fabric-escape-room-v2` folder and click **Select Folder**.
+1. In VS Code, click **File → Open Folder…** in the top menu bar, then select your `next-bis-day` folder and click **Select Folder**.
 2. Click **File → Add Folder to Workspace…**, then select your `skills-for-fabric` folder and click **Add**.
 3. Click **File → Save Workspace As…**, name it (e.g. `escape-room.code-workspace`) and save it anywhere you like. Open this file next time you want to come back.
 
