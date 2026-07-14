@@ -29,13 +29,26 @@ In a team event, each team follows these steps with different people handling ea
 
 ## Prerequisites
 
+Before starting, each team should assign roles:
+
+- 1 GitHub Copilot executor (Copilot player/operator)
+- 2 Power BI creators
+
+Requirements that apply to everyone:
+
 - A **Microsoft Fabric workspace** with capacity assigned (F64 or higher recommended)
 - **Contributor** or **Member** role on the workspace
-- **Power BI Pro** license (required to create and publish reports)
-- **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
+
+Requirements for the GitHub Copilot executor:
+
 - **GitHub Copilot** license (individual, business, or enterprise)
 - **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli)) — used by the Fabric skills for REST API calls
-- Tenant settings must allow the required Fabric experiences: Lakehouse, Notebook/Spark jobs, Eventhouse/KQL, semantic model authoring, Data Agent, OrgApp, and sharing/publishing
+- **Power BI Pro** license (or start a free trial)
+
+Requirements for Power BI creators (2 people):
+
+- **Power BI Pro** license (or start a free trial)
+- **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
 ---
 
