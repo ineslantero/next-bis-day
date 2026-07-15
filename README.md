@@ -75,26 +75,24 @@ Players must find 4 authorization codes hidden across the first 4 modules, then 
 
 ## Prerequisites
 
-Before starting, each team should assign roles:
+Before starting, assign the **5 team roles** from [CREATION-INSTRUCTIONS.md](CREATION-INSTRUCTIONS.md#team-roles):
 
-- 1 GitHub Copilot executor (Copilot player/operator)
-- 2 Power BI creators
-
-Requirements that apply to everyone:
-
+**All team members:**
 - A **Microsoft Fabric workspace** with capacity assigned (F64 or higher recommended)
 - **Contributor** or **Member** role on the workspace
 
-Requirements for the GitHub Copilot executor:
-
+**Player 1 (GitHub Copilot Player) — Additional requirements:**
 - **GitHub Copilot** license
 - **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli))
 - **Power BI Pro** license (or start a free trial)
+- **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
-Requirements for Power BI creators (2 people):
-
+**Player 2 (Power BI Player) — If splitting Power BI work:**
 - **Power BI Pro** license (or start a free trial)
 - **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
+
+**Players 3–5 (RTI Dashboard Creator, Data Agent Owner, OrgApp Creator):**
+- Browser access to Fabric workspace only (no special software needed)
 
 ---
 

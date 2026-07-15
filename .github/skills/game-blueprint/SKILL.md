@@ -57,7 +57,7 @@ Every game has exactly **5 modules**.
 
 - **Puzzle type:** Find the code hidden in formatted output
 - **Fabric items:** Notebook
-- **Pattern:** A pre-formatted diagnostic/report notebook with **many cells** of themed output. The code is buried in one section among a large amount of visual noise. The notebook should feel like a real system log — dense, detailed, and not immediately scannable.
+- **Pattern:** A pre-formatted diagnostic/report notebook with **12–15 cells** spanning 6–8 themed diagnostic sections mixed with 2–3 warning sections. The code is buried in one section among a large amount of visual noise. The notebook should feel like a real system log — dense, detailed, and not immediately scannable.
 - **Content design:**
   - **Minimum 12–15 cells** — mix of markdown headers, code cells with pre-rendered output, and narrative text cells
   - Use generous themed emojis throughout (✅, ⚠️, 🔧, 📡, 🛡️, 💾, 🔋, 🌡️, etc.) so the FAIL section doesn't stand out just because it has an emoji

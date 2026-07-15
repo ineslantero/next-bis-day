@@ -31,7 +31,7 @@ ANSWER-KEY.md                    ← top-level, game admin only (codes + verific
 ## Setup Guide File Specs
 
 Each file in `setup-guide/` must include at the top:
-- **Owner role** — e.g. "Power BI builder", "Data Agent owner", "OrgApp owner"
+- **Owner role** — e.g. "GitHub Copilot Player", "Power BI Player", "RTI Dashboard Creator", "Data Agent Owner", "OrgApp Creator"
 - **Depends on** — which other files must be done first
 - **Estimated screens needed** — Power BI Desktop only, browser only, or both
 
@@ -43,8 +43,8 @@ Keep cross-references minimal. Repeat short shared steps inline; link to `00-SHA
 
 Contents:
 - A table mapping each setup file to its owner role and dependencies
-- A "suggested team split" section (e.g. 4-person split: Power BI builder takes 01/04, RTI player takes 02, Data Agent owner takes 03, OrgApp owner takes 05)
-- A dependency diagram showing `05-ORGAPP.md` waits for reports/dashboard to be published and Data Agent share link to be available
+- A "5-person team split" section: Player 1 (GitHub Copilot Player) takes 01/04, Player 2 (Power BI Player) takes 01/04 (optional), Player 3 (RTI Dashboard Creator) takes 02, Player 4 (Data Agent Owner) takes 03, Player 5 (OrgApp Creator) takes 05
+- A dependency diagram showing `05-ORGAPP.md` waits for reports/dashboard to be published and **Data Agent share link** to be available
 - A "definition of done" checklist (all 4 codes verified, OrgApp link tested as a player)
 
 **Completion criterion:** README contains the role table, team split, dependency diagram, and done checklist.
@@ -76,7 +76,7 @@ Contents:
 
 ## setup-guide/01-MODULE1-REPORT.md — Data Anomaly Report
 
-Owner: Power BI builder. Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
+Owner: Player 1 (GitHub Copilot Player) or Player 2 (Power BI Player). Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
 
 Steps:
 1. **Connect to the semantic model:** Home ribbon → **Get data** dropdown → **Power BI semantic models** → pick `{GameName}SM` → **Connect** (live-connect mode, do not click "Make changes to this model")
@@ -95,7 +95,7 @@ Steps:
 
 ## setup-guide/02-MODULE2-DASHBOARD.md — Pattern Gap RTI Dashboard
 
-Owner: RTI player. Depends on: nothing — runs in parallel. Screens: browser only.
+Owner: Player 3 (RTI Dashboard Creator). Depends on: nothing — runs in parallel. Screens: browser only.
 
 Steps:
 1. **Create the dashboard:** Fabric workspace → **+ New item** → **Real-Time Dashboard** → name it `{GameName} Dashboard` → **Create**
@@ -130,7 +130,7 @@ Replace `{ActivityTable}`, `{AssessmentTable}`, and column names with the actual
 
 ## setup-guide/03-MODULE3-DATA-AGENT.md — AI Conversation Data Agent
 
-Owner: Data Agent owner. Depends on: nothing — fully independent. Screens: browser only.
+Owner: Player 4 (Data Agent Owner). Depends on: nothing — fully independent. Screens: browser only.
 
 Steps:
 1. **Create the Data Agent:** Fabric workspace → **+ New item** → **Data Agent** → name it `{AIName}` → **Create**
@@ -180,7 +180,7 @@ You have access to these tables:
 
 4. **Publish** at the top right
 5. **Share** at the top right → **People in your organization with the link can use** → **Copy link**
-6. **Hand off the link** to the OrgApp owner
+6. **Hand off the link** to Player 5 (OrgApp Creator)
 
 **Completion criterion:** Data Agent published and shareable link copied for OrgApp setup.
 
@@ -188,9 +188,9 @@ You have access to these tables:
 
 ## setup-guide/04-MODULE5-REPORT.md — Final Escape Report
 
-Owner: Power BI builder. Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
+## setup-guide/04-MODULE5-REPORT.md — Final Escape Report
 
-Steps:
+Owner: Player 1 (GitHub Copilot Player) or Player 2 (Power BI Player). Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
 1. **Connect to semantic model:** Home → Get data → Power BI semantic models → `{GameName}SM` → Connect (live connect)
 2. **Apply the theme** via View → Themes → Browse for themes
 3. **Add the page title** (e.g. "🚀 LAUNCH AUTHORIZATION")
@@ -209,7 +209,7 @@ Steps:
 
 ## setup-guide/05-ORGAPP.md — Game Portal OrgApp
 
-Owner: OrgApp owner. Depends on: `01`, `02`, `03`, `04` all published. The Data Agent **shareable link** from `03` must be in hand. Screens: browser only.
+Owner: Player 5 (OrgApp Creator). Depends on: `01`, `02`, `03`, `04` all published. The Data Agent **shareable link** from Player 4 must be in hand. Screens: browser only.
 
 Steps:
 1. **Create the OrgApp:** Fabric workspace → **+ New item** → **Org app** → name it `{GameName}` → **Create**
