@@ -21,7 +21,7 @@ Assign these 5 roles to your team before starting:
 | **2** | Power BI Player | — | ✅ Power BI modules | Module 1 & 5 reports (or splits work with Player 1) |
 | **3** | RTI Dashboard Creator | — | ✅ Builds dashboard | Module 2 RTI Dashboard |
 | **4** | Data Agent Owner | — | ✅ Configures AI | Module 3 Data Agent |
-| **5** | OrgApp Creator | — | ✅ Final assembly | Wires all items into OrgApp (Phase 3) |
+| **5** | OrgApp Creator | — | ✅ Final assembly | Wires all items into OrgApp (Phase 2) |
 
 **Key dependencies:**
 - Player 1 must complete Phase 1 **before** any player starts Phase 2
@@ -37,12 +37,11 @@ In a team event, the 5-person team follows this sequence:
 | Phase | Who | What they do | Time |
 |-------|-----|-------------|------|
 | **1. Initial Build** | Player 1 (GitHub Copilot Player) | Alone: Runs the creation prompt. Copilot creates Lakehouse, Eventhouse, Semantic Model, seed notebook, diagnostic notebook, and generates the setup guide | ~1 hour |
-| **2. Manual Build in Parallel** | All 5 players | In parallel: Players 1–4 each pick a setup guide file and build their assigned item (Module 1 & 5 reports, Module 2 dashboard, Module 3 Data Agent) | ~30 min |
-| **3. Assemble Game** | Player 5 (OrgApp Creator) | Wires all published items into the OrgApp and publishes it | ~15 min |
-| **4. Test & Reset** | Any player | Verify: Test the game end-to-end, solve all puzzles, reset filters | ~15 min |
-| **5. Play & Escape** | Other team | Players: Teams swap OrgApp links and try to escape each other's games | ~30 min |
+| **2. Manual Build & Assemble** | All 5 players | In parallel: Players 1–4 each pick a setup guide file and build their assigned item (Module 1 & 5 reports, Module 2 dashboard, Module 3 Data Agent). Player 5 wires all published items into the OrgApp and publishes it | ~45 min |
+| **3. Test & Reset** | Any player | Verify: Test the game end-to-end, solve all puzzles, reset filters | ~15 min |
+| **4. Play & Escape** | Other team | Players: Teams swap OrgApp links and try to escape each other's games | ~30 min |
 
-> **Tip:** Player 5 (OrgApp Creator) is blocked until Player 4 (Data Agent Owner) publishes their Data Agent and shares the link. Recommend: give Player 5 time to review while waiting by having them set up the OrgApp structure in phase 2.
+> **Tip:** Player 5 (OrgApp Creator) is blocked until Player 4 (Data Agent Owner) publishes their Data Agent and shares the link. Recommend: have Player 5 set up the OrgApp structure while waiting for the Data Agent link during phase 2.
 
 ---
 
