@@ -83,7 +83,11 @@ Before starting, assign the **5 team roles** from [CREATION-INSTRUCTIONS.md](CRE
 
 **Player 1 (GitHub Copilot Player) — Additional requirements:**
 - **GitHub Copilot** license
+- **VS Code** installed
 - **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli))
+- **sqlcmd (Go)** installed (`winget install sqlcmd`)
+- **jq** installed
+- **curl** available on PATH
 - **Power BI Pro** license (or start a free trial)
 - **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
