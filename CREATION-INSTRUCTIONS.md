@@ -1,6 +1,6 @@
 # 🎮 Escape Room Game Creator — Getting Started
 
-This guide walks you through creating a complete Fabric escape room game using GitHub Copilot. The v2 game includes 5 puzzle modules built on Fabric items (Lakehouse, Eventhouse, Semantic Model, Notebook, Data Agent, and OrgApp) and avoids Warehouse SQL/TDS connectivity.
+This guide walks you through creating a complete Fabric escape room game using GitHub Copilot. The game includes 5 puzzle modules built on Fabric items (Lakehouse, Eventhouse, Semantic Model, Notebook, Data Agent, and OrgApp).
 
 **What's in this folder:**
 
@@ -138,8 +138,6 @@ Build the complete game following the escape room framework. Use these Fabric sk
 - **Lakehouse + seed notebook** (use the `spark-authoring-cli` skill) — create `{GameName}LH`, deploy an attached `{GameName} Seed Data` notebook, execute it via `RunNotebook`, and populate all Module 1, Module 3, and Module 5 Delta tables in the Lakehouse
 - **Module 4 diagnostic notebook** (use the `spark-authoring-cli` skill) — themed diagnostic output (4–6 sections, one showing the code)
 - **Semantic Model** (use the `semantic-model-authoring` skill) — DirectLake TMDL over Lakehouse Delta tables with explicit average measures and a victory/denied DAX measure
-
-Do **NOT** create a Warehouse. Do **NOT** use `sqldw-authoring-cli`, `sqlcmd`, or the Warehouse SQL/TDS endpoint. This v2 flow is designed for networks where outbound TCP 1433 is blocked.
 
 Do **NOT** create the Data Agent, OrgApp, Power BI reports, or RTI Dashboard via Copilot — those are configured manually in the Fabric portal using the Setup Guide you generate.
 
