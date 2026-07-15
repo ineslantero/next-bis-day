@@ -47,23 +47,24 @@ In a team event, the 5-person team follows this sequence:
 
 ## Prerequisites
 
-See the **Team Roles** section above. Requirements by role:
+Before starting, assign the **5 team roles** from the [Team Roles](#team-roles) section above:
 
 **All team members:**
 - A **Microsoft Fabric workspace** with capacity assigned (F64 or higher recommended)
 - **Contributor** or **Member** role on the workspace
 
-**GitHub Copilot Player — Required:**
-- **GitHub Copilot** license (individual, business, or enterprise)
-- **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli)) — used by the Fabric skills for REST API calls
+**Player 1 (GitHub Copilot Player) — Additional requirements:**
+- **GitHub Copilot** license
+- **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli))
 - **Power BI Pro** license (or start a free trial)
 - **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
-**Power BI Player (any player who builds reports in phase 2):**
+**Player 2 (Power BI Player) — If splitting Power BI work:**
 - **Power BI Pro** license (or start a free trial)
 - **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
-> **Note:** The GitHub Copilot Player can also be a Power BI Player in phase 2 — they already have the required licenses and software. If splitting Power BI work across multiple players, each needs Power BI Pro and Desktop.
+**Players 3–5 (RTI Dashboard Creator, Data Agent Owner, OrgApp Creator):**
+- Browser access to Fabric workspace only (no special software needed)
 
 ---
 
