@@ -43,7 +43,7 @@ Keep cross-references minimal. Repeat short shared steps inline; link to `00-SHA
 
 Contents:
 - A table mapping each setup file to its owner role and dependencies
-- A "suggested team split" section (e.g. 3-person split: BI builder takes 01/02/04, agent owner takes 03, portal owner takes 05)
+- A "suggested team split" section (e.g. 4-person split: Power BI builder takes 01/04, RTI player takes 02, Data Agent owner takes 03, OrgApp owner takes 05)
 - A dependency diagram showing `05-ORGAPP.md` waits for reports/dashboard to be published and Data Agent share link to be available
 - A "definition of done" checklist (all 4 codes verified, OrgApp link tested as a player)
 
@@ -95,7 +95,7 @@ Steps:
 
 ## setup-guide/02-MODULE2-DASHBOARD.md — Pattern Gap RTI Dashboard
 
-Owner: Power BI builder (or RTI owner). Depends on: nothing — runs in parallel. Screens: browser only.
+Owner: RTI player. Depends on: nothing — runs in parallel. Screens: browser only.
 
 Steps:
 1. **Create the dashboard:** Fabric workspace → **+ New item** → **Real-Time Dashboard** → name it `{GameName} Dashboard` → **Create**

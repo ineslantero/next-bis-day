@@ -173,9 +173,10 @@ If anything is missing, ask Copilot to retry that step before continuing.
 
 ## Step 4: Follow the Setup Guide
 
-Open `setup-guide/README.md` first — it lists owner roles, dependency order, and a suggested team split. Typical 3-person split:
+Open `setup-guide/README.md` first — it lists owner roles, dependency order, and a suggested team split. Typical 4-person split:
 
-- **Power BI builder** — `01-MODULE1-REPORT.md`, `02-MODULE2-DASHBOARD.md`, `04-MODULE5-REPORT.md`
+- **Power BI builder** — `01-MODULE1-REPORT.md`, `04-MODULE5-REPORT.md`
+- **RTI player** — `02-MODULE2-DASHBOARD.md`
 - **Data Agent owner** — `03-MODULE3-DATA-AGENT.md` (independent — can run in parallel)
 - **OrgApp owner** — `05-ORGAPP.md` (waits for the others to publish their items)
 
