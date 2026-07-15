@@ -75,12 +75,26 @@ Players must find 4 authorization codes hidden across the first 4 modules, then 
 
 ## Prerequisites
 
-- **Microsoft Fabric workspace** with capacity (F64+ recommended)
+Before starting, each team should assign roles:
+
+- 1 GitHub Copilot executor (Copilot player/operator)
+- 2 Power BI creators
+
+Requirements that apply to everyone:
+
+- A **Microsoft Fabric workspace** with capacity assigned (F64 or higher recommended)
 - **Contributor** or **Member** role on the workspace
-- **Power BI Pro** license and **Power BI Desktop** ([download](https://powerbi.microsoft.com/desktop))
+
+Requirements for the GitHub Copilot executor:
+
 - **GitHub Copilot** license
 - **Azure CLI** installed ([install guide](https://learn.microsoft.com/cli/azure/install-azure-cli))
-- **Tenant settings** that allow Lakehouse, Notebook/Spark jobs, Eventhouse/KQL, semantic model authoring, Data Agent, OrgApp, and sharing/publishing
+- **Power BI Pro** license (or start a free trial)
+
+Requirements for Power BI creators (2 people):
+
+- **Power BI Pro** license (or start a free trial)
+- **Power BI Desktop** installed ([download](https://powerbi.microsoft.com/desktop))
 
 ---
 
