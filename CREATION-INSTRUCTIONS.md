@@ -193,9 +193,18 @@ If anything is missing, ask Copilot to retry that step before continuing.
 
 ---
 
-## Step 4: Follow the Setup Guide
+## Step 4: Share the Setup Guide and Follow Instructions
 
 Open `setup-guide/README.md` first — it lists owner roles, dependency order, and task assignments.
+
+Before team members start Phase 2, **Player 1** should share the generated setup guide folder with Players 2-5.
+
+**Player 1 — how to find, zip, and share the setup guide:**
+1. In VS Code Explorer, right-click the `setup-guide` folder and choose **Reveal in File Explorer**.
+2. In File Explorer, confirm the folder contains these files: `README.md`, `00-SHARED-SETUP.md`, `01-MODULE1-REPORT.md`, `02-MODULE2-DASHBOARD.md`, `03-MODULE3-DATA-AGENT.md`, `04-MODULE5-REPORT.md`, `05-ORGAPP.md`.
+3. Right-click the `setup-guide` folder and select **Send to → Compressed (zipped) folder**.
+4. Create an email to Players 2-5, attach the `.zip` file, and include a short note: "Unzip and start with `00-SHARED-SETUP.md`, then follow your assigned module file from `README.md`."
+5. After sending, confirm each player can open their assigned setup guide file locally.
 
 **5-person team split:**
 - **Player 1 (GitHub Copilot Player)** — `01-MODULE1-REPORT.md`, `04-MODULE5-REPORT.md` (Power BI reports)
