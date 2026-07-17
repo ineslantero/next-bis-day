@@ -95,3 +95,18 @@ Every game has exactly **5 modules**.
    - Module 3: 5–10 clue fragments
    - Module 4: 12–15 notebook cells
    - Module 5: 4 × 10 = 40 auth rows
+
+---
+
+## Blueprint Approval Gate
+
+After designing all 5 modules, **present the complete blueprint to the user and wait for explicit approval before any Fabric items are built**.
+
+Show the user a readable summary of the full design:
+
+- Each module's themed name and puzzle type
+- Every table name and its column schema
+- The real authorization code for each module
+- The decoy codes (or the decoy strategy) for each module
+
+Then ask the user to approve the blueprint. If they request changes, revise the design and present the updated blueprint again. **Do not begin building Fabric items until the user has approved.**

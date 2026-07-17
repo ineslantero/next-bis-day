@@ -11,6 +11,8 @@ Provision each item using `skills-for-fabric` skills, then run validation checks
 
 ## Architecture — Items to Create
 
+> The **Skill to use** column names skills from the sibling **[microsoft/skills-for-fabric](https://github.com/microsoft/skills-for-fabric)** repo, which must be open in the same VS Code workspace. Each skill owns the exact REST/CLI calls for its item type — invoke it instead of hand-writing API calls. If a named skill isn't available, that repo isn't loaded: stop and ask the user to add it to the workspace.
+
 | Item | Type | Skill to use | Purpose |
 |------|------|--------------|---------|
 | `{GameName}LH` | Lakehouse | `spark-authoring-cli` | Delta tables for puzzle data, clue fragments, and authorization codes |
@@ -31,6 +33,28 @@ Provision each item using `skills-for-fabric` skills, then run validation checks
 
 ---
 
+## Build Discipline (applies to every step)
+
+Every item obeys the **game contract** — the tables, codes, and bindings the blueprint promised must all agree. Three rules keep deployments repeatable:
+
+- **List before create.** Before creating any item, list existing items by `displayName` + type and reuse the existing ID if present. Repeated create calls otherwise pile up duplicate artifacts. Give diagnostic probes dedicated names and delete them when done — the workspace ends on the canonical item set only.
+- **One source of truth per item.** Each notebook and model definition lives in exactly one file the build reads from. Keep no stale embedded copies inside the build script.
+- **Validate JSON before upload.** Parse every definition payload (notebook `.ipynb`, TMDL parts, `definition.pbism`) before the create/update call.
+
+### Identity Preflight (do this first)
+
+Before discovering the workspace or creating any item, confirm which account is signed in and get the user's approval:
+
+```pwsh
+az account show --query "{user:user.name, tenant:tenantId, subscription:name}" -o json
+```
+
+Report the `user` and `tenant` back to the user and wait for them to confirm it is the correct account. If it is wrong, or no account is signed in, stop and ask them to run `az login` with the right identity. Deploying to the wrong tenant is hard to reverse, so treat this as a required gate.
+
+**Completion criterion:** User has confirmed the signed-in account before any workspace lookup runs.
+
+---
+
 ## Step 1: Provision the Lakehouse
 
 Use `spark-authoring-cli` to create or find `{GameName}LH`.
@@ -41,14 +65,15 @@ Use `spark-authoring-cli` to create or find `{GameName}LH`.
 
 ## Step 2: Create and Run the Seed Notebook
 
-Create `{GameName} Seed Data` as a PySpark notebook with default Lakehouse metadata (`default_lakehouse`, `default_lakehouse_workspace_id`, `default_lakehouse_name`).
+Use `spark-authoring-cli` to create `{GameName} Seed Data` as a PySpark notebook with default Lakehouse metadata (`default_lakehouse`, `default_lakehouse_workspace_id`, `default_lakehouse_name`).
 
 ### Seed Notebook Requirements
 
 - **Idempotent:** Use `CREATE OR REPLACE TABLE` in Spark SQL, or overwrite mode with `option("overwriteSchema", "true")`.
 - **Built-in only:** Use PySpark, Spark SQL, and standard Python. Do not install external packages. Do not call external network endpoints.
 - **Deterministic codes:** Keep all player-facing codes in variables at the top of the notebook so the Answer Key, Module 5 DAX, and setup guide stay synchronized.
-- **Lowercase table names** for physical tables; keep semantic model display names friendly.
+- **Lowercase table names** for physical tables; keep semantic model display names friendly. Spark `saveAsTable` writes lowercase folders — the semantic model must bind to that exact case (see Step 4).
+- **Valid notebook JSON:** The source file must be a real `.ipynb` document — top-level `nbformat`, `nbformat_minor`, `metadata`, and `cells`, each cell carrying `metadata.language` and a valid `cell_type`/`source`. Editor-export formats (e.g. `<VSCode.Cell …>`) fail deployment. Parse the JSON before calling create/update.
 - **Validation cell:** Final cell prints row counts for every generated table.
 
 ### Tables to Populate
@@ -57,17 +82,15 @@ Create `{GameName} Seed Data` as a PySpark notebook with default Lakehouse metad
 - Module 3 clue fragment table(s) — see `game-blueprint` for schema
 - Module 5 auth tables: `AuthModule1`, `AuthModule2`, `AuthModule3`, `AuthModule4` — each with 10 rows (1 correct + 9 decoys)
 
-### Execute the Notebook
+### Resolve IDs, Attach the Lakehouse, then Execute
 
-1. Upload the notebook definition.
-2. Execute with the Fabric Jobs API using `jobType=RunNotebook`.
-3. Poll the job until it reaches `Completed`. If it fails, report the failure with Fabric job details and retry.
+1. **Resolve the binding IDs dynamically — never hardcode.** Confirm `{GameName}LH` exists in the target workspace, then list items filtered by type `Lakehouse` and match by display name to capture its item GUID, its workspace GUID, and its display name. The binding metadata below requires these real GUIDs, so discover them before attaching or uploading.
+2. **Attach `{GameName}LH` to the notebook and confirm it is attached.** Using `spark-authoring-cli`, set the resolved IDs as the notebook's default Lakehouse (`default_lakehouse`, `default_lakehouse_workspace_id`, `default_lakehouse_name`) and verify the attachment resolves before running. Without an attached Lakehouse the notebook has no default catalog to write Delta tables into, and the run fails or writes nowhere.
+3. **Upload the notebook definition.** When posting the body with `az rest`, write the JSON to a temp file and pass `--body "@$tmpFile"` — PowerShell mangles JSON inside `--body '{...}'`. Always include `--headers "Content-Type=application/json"` on create calls.
+4. **Execute** with the Fabric Jobs API using `jobType=RunNotebook`.
+5. **Poll** the job until it reaches `Completed`. If it fails, report the failure with Fabric job details and retry.
 
-### CLI Gotcha: PowerShell Body Quoting
-
-PowerShell mangles JSON inside `az rest --body '{...}'`. Write the JSON to a temp file and use `--body "@$tmpFile"` instead. Always include `--headers "Content-Type=application/json"` on create calls.
-
-**Completion criterion:** Seed notebook job status is `Completed` and all tables exist with expected row counts.
+**Completion criterion:** `{GameName}LH` is attached to the notebook, the job status is `Completed`, and all tables exist with expected row counts.
 
 ---
 
@@ -100,6 +123,29 @@ Use `semantic-model-authoring` to create `{GameName}SM` in **DirectLake** mode o
 - All Module 5 auth tables (`AuthModule1` through `AuthModule4`)
 - Relationships are NOT needed — each puzzle uses independent tables
 
+### Table Bindings (DirectLake partitions)
+
+Each table's partition is what binds the model to a physical Lakehouse Delta table. Every table `.tmdl` uses a DirectLake `entity` partition whose `source` points at the physical table (`entityName`) through the model's named expression (`expressionSource`):
+
+```tmdl
+table AuthModule1
+	column LabCode
+		dataType: string
+		sourceColumn: LabCode
+
+	partition AuthModule1 = entity
+		mode: directLake
+		source
+			entityName: authmodule1
+			expressionSource: DL_{GameName}
+```
+
+- `entityName` = the **physical** Lakehouse table name (lowercase, as Spark `saveAsTable` wrote it), even when the table's display name is `AuthModule1`.
+- `expressionSource` = the named expression defined in `model.tmdl` (see the named-expression gotcha below).
+- `sourceColumn` = the physical Delta column name; the display column name above it can differ.
+
+The **Deployment Gotchas** below refine each of these — read them before generating the TMDL.
+
 ### Explicit Measures (required)
 
 Create named DAX measures for every numeric field used in Module 1 visuals (gauge, summary table). Example:
@@ -125,19 +171,54 @@ IF(
 )
 ```
 
-### TMDL Gotchas
+### Deployment Gotchas (hard-won — each one broke a real run)
 
-- **Tab indentation required.** TMDL uses literal tab characters for nesting, not spaces. Spaces cause `Indentation` parse errors.
-- **`defaultPowerBIDataSourceVersion: powerBI_V3`** must appear in `model.tmdl` when any table uses an import-mode partition (e.g., the `_Measures` table with `evaluate {1}`). Without it, creation fails with "Import from JSON supported for V3 models only."
-- **Semantic model creation is an LRO.** The POST returns `202 Accepted` with an `x-ms-operation-id` header. Poll `GET /v1/operations/{id}` until `Succeeded` — check the `error` field on `Failed`.
+**Definition & creation**
 
-**Completion criterion:** Semantic model exists, all source tables are bound, and all named measures are present.
+- **Create via the semantic model endpoint with a full definition.** `POST /v1/workspaces/{workspaceId}/semanticModels` carrying the complete envelope — `definition.pbism`, `definition/database.tmdl`, `definition/model.tmdl`, and `definition/tables/*.tmdl` as InlineBase64 parts, with `Content-Type: application/json`. A create without the full body returns `MissingDefinition`.
+- **Creation and update are LROs.** The POST returns `202 Accepted` with an `x-ms-operation-id` header. Poll `GET /v1/operations/{id}` until `Succeeded` (inspect the `error` field on `Failed`) before discovering or updating the item. A `202` is not a finished create.
+
+**`definition.pbism`**
+
+- **Literal JSON, simple shape.** Build it as single-quoted literal text — PowerShell interpolation in a double-quoted here-string corrupts the `$schema`/`version` keys. Use the Items-API-compatible form and nothing fancier:
+  ```json
+  { "version": "4.2", "settings": { "qnaEnabled": true } }
+  ```
+  Keep the Direct Lake connection in the `model.tmdl` named expression — not in a `byConnection` or `datasetReference` pbism variant.
+
+**`model.tmdl` named expression**
+
+- **Generate from a template, then token-replace** the workspace/lakehouse IDs — hand-escaped interpolation produces a malformed M expression (`syntax error in expression DL_…`). Expected shape:
+  ```tmdl
+  expression DL_{GameName} =
+  	let
+  		Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/{WORKSPACE_ID}/{LAKEHOUSE_ID}", [HierarchicalNavigation=true])
+  	in
+  		Source
+  ```
+- **Tab indentation required.** TMDL nests with literal tab characters, not spaces. Spaces cause `Indentation` parse errors.
+- **`defaultPowerBIDataSourceVersion: powerBI_V3`** must appear in `model.tmdl` when any table uses an import-mode partition (e.g. a `_Measures` table with `evaluate {1}`). Without it, creation fails with "Import from JSON supported for V3 models only."
+
+**Direct Lake table bindings**
+
+- **`entityName` must match the physical OneLake table name exactly, including case.** Spark `saveAsTable` writes lowercase folders (`authmodule1`), so bind partitions to the lowercase name even when the display name is `AuthModule1`. Mixed-case bindings fail with "source tables do not exist or access denied." Display names stay friendly for UX; only the partition `entityName` must be case-correct.
+- **Set `entityName` + `expressionSource`, and omit `schemaName`** unless a schema-enabled Lakehouse layout is explicitly verified — an unverified `schemaName: dbo` produces table warning icons in the UI.
+- **Validate every binding against the actual Lakehouse table names before publish.**
+
+**Token audience for runtime calls**
+
+- Items-API CRUD (create/update/get semantic model) uses the **Fabric** audience: `https://api.fabric.microsoft.com`.
+- Dataset runtime calls — refresh, `executeQueries`, datasource/parameters/users — use the **Power BI** audience: `https://analysis.windows.net/powerbi/api`. A Fabric token on these hangs or fails. Set the resource explicitly per call and keep the two API families separate.
+
+**Completion criterion:** Semantic model exists, every partition `entityName` resolves to a real case-correct Lakehouse table, all named measures are present, and the creation LRO reached `Succeeded`.
 
 ---
 
 ## Step 5: Create the Diagnostic Notebook (Module 4)
 
 Use `spark-authoring-cli` to create `{ModuleName} Diagnostic` — see `game-blueprint` Module 4 content design for cell structure and formatting rules.
+
+**Reference example:** Model the new notebook on the validated `MurderAtMicrosoft Diagnostic` notebook captured in [`references/diagnostic-notebook-example.md`](references/diagnostic-notebook-example.md). Follow its **format and markdown conventions** — the same cell structure, heading levels, status glyphs (✅ / ⚠️ / 🔧), blockquotes, ASCII banner, and code-cell style. It shows the proven pattern: an ASCII banner intro cell, a "how to read this report" glyph legend, ~7 themed sections (mostly ✅ NOMINAL) with 2 ⚠️ WARNING red herrings, one 🔧 AUDIT section whose dense frozen output hides the real code, and a "Diagnostic Complete" outro cell with an in-character closing hint. Reuse this exact shape, tone, and formatting; swap in only the current game's theme, subsystem names, and embedded authorization code.
 
 **Completion criterion:** Notebook exists in the workspace with 12–15 cells of themed diagnostic output and one embedded code.
 
@@ -162,8 +243,16 @@ If any item is missing or failed, report the failure and retry before continuing
 
 Confirm every table and column in the semantic model matches the source Lakehouse Delta tables. Mismatched schemas cause blank visuals or errors in reports.
 
+### 2. Schema Match
+
+Confirm every table and column in the semantic model matches the source Lakehouse Delta tables. Mismatched schemas cause blank visuals or errors in reports. Confirm each partition `entityName` matches the physical (lowercase) Lakehouse table name exactly — case mismatches show as "source tables do not exist" errors.
+
 ### 3. Explicit Measures Exist
 
 Confirm all average/aggregate measures needed by Module 1 visuals are created as named DAX measures — not left as implicit aggregations.
 
-**Completion criterion for validation:** All three checks pass. Only then proceed to documentation generation.
+### 4. Canonical Inventory (no duplicates)
+
+Confirm the workspace holds exactly one of each canonical item and no leftover probe artifacts from iterative create attempts. Delete any duplicate notebooks or semantic models created during testing.
+
+**Completion criterion for validation:** All four checks pass. Only then proceed to documentation generation.

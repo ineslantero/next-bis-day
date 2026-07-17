@@ -39,7 +39,36 @@ Keep cross-references minimal. Repeat short shared steps inline; link to `00-SHA
 
 ---
 
+## How to Write the Steps (applies to every guide)
+
+### Be exhaustively detailed — write for someone who has never opened the tool
+
+Every guide must be click-by-click. Assume the reader cannot infer any step. For each action, spell out:
+
+- **The exact click path** using the real UI labels and separators, e.g. *Home ribbon → **Get data** dropdown → **More…** → **Power BI semantic models** → select `{GameName}SM` → **Connect***.
+- **The precise control to use** — name the ribbon, pane, dialog, dropdown, button, checkbox, or field well, not just "add a visual".
+- **What to type or select** — exact field names, measure names, values, styles (e.g. Slicer style **Tile** vs **Dropdown**), and where they go (Field well, Values, Rows, Legend).
+- **What the reader should see afterward** — a one-line "you should now see…" confirmation so they can self-check before moving on.
+- **How to recover** — if a menu item is missing or a step fails (wrong capacity, missing license, item not found), state the fallback (e.g. "return to Copilot chat to re-run the build").
+
+Number every step. Break any step with more than one click into sub-bullets. Never collapse multiple UI actions into a single instruction like "configure the visual" — expand it into each individual click. Prefer more numbered steps over denser prose.
+
+### Be creative — the game should feel alive
+
+These are escape-room games, so the documentation and the items players see should have personality:
+
+- **Use emojis in titles and headings** — report page titles (`🚀 LAUNCH AUTHORIZATION`, `🔬 ANOMALY SCANNER`), dashboard tile names, OrgApp section headers, and guide section titles. Match the emoji to the theme.
+- **Write item names and descriptions in-character** — lean into the story's tone (space station, haunted manor, pirate ship) for titles, slicer labels, card captions, and the OrgApp overview text.
+- **Give the AI Data Agent a distinct voice** — themed dialect, atmospheric flavor (`[STATIC]`, *creaking sounds*), and personality consistent with the backstory.
+- **Theme the visuals** — align colors, callouts, and status messages (victory/denied) with the game world, not generic defaults.
+
+Keep the creativity in the player-facing text and titles. The click-by-click instructions themselves stay literal and precise so nothing is ambiguous.
+
+---
+
 ## setup-guide/README.md — Index
+
+**Reference example:** [`references/README.md`](references/README.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the theme, role names, and module titles to the current game.
 
 Contents:
 - A table mapping each setup file to its owner role and dependencies
@@ -52,6 +81,8 @@ Contents:
 ---
 
 ## setup-guide/00-SHARED-SETUP.md — Shared Prerequisites
+
+**Reference example:** [`references/00-SHARED-SETUP.md`](references/00-SHARED-SETUP.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the item names and theme to the current game.
 
 Contents:
 - **Sign-in steps:**
@@ -78,6 +109,8 @@ Contents:
 
 Owner: Player 1 (GitHub Copilot Player) or Player 2 (Power BI Player). Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
 
+**Reference example:** [`references/01-MODULE1-REPORT.md`](references/01-MODULE1-REPORT.md) from the *Murder at Microsoft* build shows the exact click-by-click format to follow — reuse its structure and adapt the visuals, measures, and theme to the current game.
+
 Steps:
 1. **Connect to the semantic model:** Home ribbon → **Get data** dropdown → **Power BI semantic models** → pick `{GameName}SM` → **Connect** (live-connect mode, do not click "Make changes to this model")
 2. **Apply the custom theme:** View ribbon → Themes gallery dropdown → **Browse for themes…** → select the `.json` file
@@ -96,6 +129,8 @@ Steps:
 ## setup-guide/02-MODULE2-DASHBOARD.md — Pattern Gap RTI Dashboard
 
 Owner: Player 3 (RTI Dashboard Creator). Depends on: nothing — runs in parallel. Screens: browser only.
+
+**Reference example:** [`references/02-MODULE2-DASHBOARD.md`](references/02-MODULE2-DASHBOARD.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the KQL queries, tile names, and theme to the current game.
 
 Steps:
 1. **Create the dashboard:** Fabric workspace → **+ New item** → **Real-Time Dashboard** → name it `{GameName} Dashboard` → **Create**
@@ -131,6 +166,8 @@ Replace `{ActivityTable}`, `{AssessmentTable}`, and column names with the actual
 ## setup-guide/03-MODULE3-DATA-AGENT.md — AI Conversation Data Agent
 
 Owner: Player 4 (Data Agent Owner). Depends on: nothing — fully independent. Screens: browser only.
+
+**Reference example:** [`references/03-MODULE3-DATA-AGENT.md`](references/03-MODULE3-DATA-AGENT.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the AI persona, instructions block, and hint progression to the current game.
 
 Steps:
 1. **Create the Data Agent:** Fabric workspace → **+ New item** → **Data Agent** → name it `{AIName}` → **Create**
@@ -188,9 +225,10 @@ You have access to these tables:
 
 ## setup-guide/04-MODULE5-REPORT.md — Final Escape Report
 
-## setup-guide/04-MODULE5-REPORT.md — Final Escape Report
-
 Owner: Player 1 (GitHub Copilot Player) or Player 2 (Power BI Player). Depends on: `00-SHARED-SETUP.md`. Screens: Power BI Desktop.
+
+**Reference example:** [`references/04-MODULE5-REPORT.md`](references/04-MODULE5-REPORT.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the slicer columns, victory measure, and theme to the current game.
+
 1. **Connect to semantic model:** Home → Get data → Power BI semantic models → `{GameName}SM` → Connect (live connect)
 2. **Apply the theme** via View → Themes → Browse for themes
 3. **Add the page title** (e.g. "🚀 LAUNCH AUTHORIZATION")
@@ -210,6 +248,8 @@ Owner: Player 1 (GitHub Copilot Player) or Player 2 (Power BI Player). Depends o
 ## setup-guide/05-ORGAPP.md — Game Portal OrgApp
 
 Owner: Player 5 (OrgApp Creator). Depends on: `01`, `02`, `03`, `04` all published. The Data Agent **shareable link** from Player 4 must be in hand. Screens: browser only.
+
+**Reference example:** [`references/05-ORGAPP.md`](references/05-ORGAPP.md) from the *Murder at Microsoft* build shows the exact format to follow — reuse its structure and adapt the module content, links, and theme to the current game.
 
 Steps:
 1. **Create the OrgApp:** Fabric workspace → **+ New item** → **Org app** → name it `{GameName}` → **Create**
