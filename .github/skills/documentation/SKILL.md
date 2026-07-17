@@ -30,6 +30,8 @@ ANSWER-KEY.md                    ← top-level, game admin only (codes + verific
 
 ## Setup Guide File Specs
 
+**⚠️ Match the reference guides.** Before writing any file in `setup-guide/`, open the corresponding reference in [`references/`](references/) (from the *Murder at Microsoft* build) and mirror it: use the **same section headings, the same ordering of sections, and the same step-by-step structure**. Reproduce each section the reference contains (owner/depends-on header, prerequisites, numbered click-by-click steps, "you should now see…" confirmations, troubleshooting/recovery notes, and completion criterion). Only swap in the current game's theme, item names, measures, KQL queries, codes, and story flavor. If the reference has a section, your guide must have the equivalent section — do not drop, merge, or reorder sections.
+
 Each file in `setup-guide/` must include at the top:
 - **Owner role** — e.g. "GitHub Copilot Player", "Power BI Player", "RTI Dashboard Creator", "Data Agent Owner", "OrgApp Creator"
 - **Depends on** — which other files must be done first
