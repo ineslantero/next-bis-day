@@ -119,7 +119,7 @@ Both agent files (the escape room builder here, and the Fabric authoring skills 
 ### 3. Open Copilot Chat in Agent mode
 
 - Open the Copilot Chat panel (click the **Copilot** icon top-right, or **View → Chat**).
-- Set the mode dropdown to **Agent** for the initial build prompt. For follow-up questions, switch to **Auto** — it routes to Agent only when tools are needed, saving tokens on simple clarifications.
+- Set the mode dropdown to **Agent** for the initial build prompt. For faster and more accurate deployment, we recommend using Claude Opus models such as **Claude Opus v8**.
 
 ---
 

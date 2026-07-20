@@ -59,6 +59,8 @@ Report the `user` and `tenant` back to the user and wait for them to confirm it 
 
 Use `spark-authoring-cli` to create or find `{GameName}LH`.
 
+**The Lakehouse name must not contain spaces** — spaces break the default Lakehouse binding and Delta table paths.
+
 **Completion criterion:** `{GameName}LH` exists in the workspace and its ID is captured for subsequent steps.
 
 ---
